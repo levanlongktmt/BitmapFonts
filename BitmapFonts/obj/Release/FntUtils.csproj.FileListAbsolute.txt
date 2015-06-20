@@ -1,0 +1,10 @@
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Release\FntUtils.dll
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Release\FntUtils.pdb
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Release\WriteableBitmapExWinPhone.dll
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Release\WriteableBitmapExWinPhoneXnaDependant.dll
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Release\WriteableBitmapExWinPhone.pdb
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Release\WriteableBitmapExWinPhone.xml
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Release\WriteableBitmapExWinPhoneXnaDependant.pdb
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Release\WriteableBitmapExWinPhoneXnaDependant.xml
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\obj\Release\FntUtils.dll
+D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\obj\Release\FntUtils.pdb
