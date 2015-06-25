@@ -1,6 +1,6 @@
 # BitmapFonts
-Library Render Bitmap Fonts in windows phone 8
-use manual:
+Library Render Bitmap Fonts in windows phone 8 </br>
+use manual: </br> 
 step 1: Put fnt and png file with same name and place in your project(ex: Assets/BitmapFont) </br>
 step 2: Load Font(should do when start app): Use static variable to storage font and load on start app. ex: </br>
   Config.ExFntFont = new BitmapFonts(); </br>
