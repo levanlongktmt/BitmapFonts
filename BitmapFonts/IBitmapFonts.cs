@@ -24,6 +24,6 @@ namespace FntUtils
         int CharCount { get; }
         void LoadFont(WriteableBitmap fontImage, string fontDefine);
         void LoadFont(Uri relativeImageSource, Uri relativeFntSource);
-        WriteableBitmap GetImageFromText(string text, int maxWidth = 800);
+        WriteableBitmap GetImageFromText(string text, int maxWidth = 800, int lineHeight = 0);
     }
 }

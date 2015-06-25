@@ -54,7 +54,7 @@ namespace FntUtils
             // Load Image fron config
             WriteableBitmap _tmp = new WriteableBitmap(_xOffset + _xAdvance, LineHeight);
             WriteableBitmap _coreContent = SourceImage.Crop(_x, _y, _width, _height);
-            BitmapUtils.PasteBitmap(ref _tmp, _xOffset, _yOffset, _coreContent);
+            BitmapUtils.PasteBitmap(ref _tmp, _xOffset, _yOffset - BaseHeigt / 2, _coreContent);
             _charImage = _tmp.Clone();
         }
 

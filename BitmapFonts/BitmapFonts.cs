@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace FntUtils
 {
-    public class BitmapFonts : IBitmapFonts
+    public class BitmapFonts //: IBitmapFonts
     {
         private string _fontName;
         private bool _isBold;
@@ -153,12 +153,47 @@ namespace FntUtils
             }
         }
 
-        public void LoadFont(WriteableBitmap fontImage, string fontDefine)
+        public void LoadFont(string fntFilePath)
+        {
+            string _fntPath = fntFilePath;
+            if (_fntPath.IndexOf('/') == 0) _fntPath.TrimStart('/');
+            string _imagePath = "/" + _fntPath.Substring(0, _fntPath.Length - 3) + "png";
+
+            Uri fntUri = new Uri(_fntPath, UriKind.RelativeOrAbsolute);
+            Uri imgUri = new Uri(_imagePath, UriKind.RelativeOrAbsolute);
+
+            LoadFont(imgUri, fntUri);
+        }
+
+        private void LoadFont(WriteableBitmap fontImage, string fontDefine)
         {
             SourceImage = fontImage.Clone();
             FntData = string.Copy(fontDefine);
 
             LoadFontFromLocalData();
+        }
+
+        private void LoadFont(Uri relativeImageSource, Uri relativeFntSource)
+        {
+            BitmapImage bmp = new BitmapImage(relativeImageSource);
+            bmp.CreateOptions = BitmapCreateOptions.BackgroundCreation;
+            string fontDefine = "";
+            var ResourceStream = Application.GetResourceStream(relativeFntSource);
+            if (ResourceStream != null)
+            {
+                using (Stream fileStream = ResourceStream.Stream)
+                {
+                    if (fileStream.CanRead)
+                    {
+                        StreamReader reader = new StreamReader(fileStream);
+                        fontDefine = reader.ReadToEnd();
+                        reader.Close();
+                    }
+                }
+            }
+            FntData = string.Copy(fontDefine);
+            // await Task.Delay(1000);
+            bmp.ImageOpened += bmp_ImageOpened;
         }
 
         private void LoadFontFromLocalData()
@@ -184,30 +219,7 @@ namespace FntUtils
             }
         }
 
-        public void LoadFont(Uri relativeImageSource, Uri relativeFntSource)
-        {
-            BitmapImage bmp = new BitmapImage(relativeImageSource);
-            bmp.CreateOptions = BitmapCreateOptions.BackgroundCreation;
-            string fontDefine = "";
-            var ResourceStream = Application.GetResourceStream(relativeFntSource);
-            if (ResourceStream != null)
-            {
-                using (Stream fileStream = ResourceStream.Stream)
-                {
-                    if (fileStream.CanRead)
-                    {
-                        StreamReader reader = new StreamReader(fileStream);
-                        fontDefine = reader.ReadToEnd();
-                        reader.Close();
-                    }
-                }
-            }
-            FntData = string.Copy(fontDefine);
-           // await Task.Delay(1000);
-            bmp.ImageOpened += bmp_ImageOpened;
-        }
-
-        void bmp_ImageOpened(object sender, RoutedEventArgs e)
+        private void bmp_ImageOpened(object sender, RoutedEventArgs e)
         {
             if(!string.IsNullOrEmpty(FntData))
             {
@@ -218,14 +230,18 @@ namespace FntUtils
         private void LoadInfo(string str1)
         {
             List<string> strArr = str1.Split(' ', '\t').ToList();
+            
             //string _fName = strArr.Single(x => x.IndexOf("face=") >= 0);
             //_fName = _fName.Replace("\"", "").Split('=')[1];
             //int _splitIndex = _fName.LastIndexOf('\\');
             //if (_splitIndex >= 0) _fontName = _fName.Substring(_splitIndex);
             //else _fontName = _fName;
 
+            
             //string _fSize = strArr.Single(x => x.IndexOf("size=") >= 0);
             //_fontSize = int.Parse(_fSize.Split('=')[1]);
+            string _fSize = strArr.Find(x => x.Contains("size="));
+            if (!string.IsNullOrEmpty(_fSize)) _fontSize = int.Parse(_fSize.Split('=')[1]);
             //string _sBold = strArr.Single(x => x.IndexOf("bold=") > 0);
             //int _fBold = 0;
             //if (!string.IsNullOrEmpty(_sBold)) _fBold = int.Parse(_sBold.Split('=')[1]);
@@ -264,7 +280,7 @@ namespace FntUtils
             _charCount = int.Parse(sCount.Split('=')[1]);
         }
 
-        public WriteableBitmap GetImageFromText(string text, int maxWidth = 800)
+        public WriteableBitmap GetImageFromText(string text, int maxWidth = 800, int lineHeight = 0)
         {
             if (string.IsNullOrEmpty(text) || CharCount == 0) return null;
             else
@@ -282,7 +298,7 @@ namespace FntUtils
 
                 if(textWidth <= maxWidth)
                 {
-                    resultBmp = GetSubStringBitmap(text);
+                    resultBmp = GetSubStringBitmap(text, lineHeight);
                 }
                 
                 else
@@ -291,6 +307,8 @@ namespace FntUtils
                     int j = 0;
                     int minWidth = 0;
                     textWidth = 0;
+                    int textHeight = LineHeight;
+                    if (lineHeight > 0) textHeight = lineHeight;
                     List<string> listSubString = new List<string>();
                     for(i=0;i<text.Length;i++)
                     {
@@ -310,14 +328,14 @@ namespace FntUtils
                     listSubString.Add(lastSubStr);
                     textLine = listSubString.Count;
 
-                    resultBmp = new WriteableBitmap(minWidth, textLine *LineHeight);
+                    resultBmp = new WriteableBitmap(minWidth, textLine *textHeight);
 
                     for(i = 0; i< listSubString.Count; i++)
                     {
                         string s = listSubString[i];
-                        WriteableBitmap wrTmp = GetSubStringBitmap(s);
+                        WriteableBitmap wrTmp = GetSubStringBitmap(s, textHeight);
                         int offset = (minWidth - wrTmp.PixelWidth) / 2;
-                        BitmapUtils.PasteBitmap(ref resultBmp, offset, i*LineHeight, wrTmp);
+                        BitmapUtils.PasteBitmap(ref resultBmp, offset, i*textHeight, wrTmp);
                     }
                 }
 
@@ -326,10 +344,16 @@ namespace FntUtils
             }
         }
 
-        private WriteableBitmap GetSubStringBitmap(string subStr)
+        private WriteableBitmap GetSubStringBitmap(string subStr, int lineHeight = 0)
         {
             int imgWidth = 0;
             int imgHeight = LineHeight;
+            int yOffSet = 0;
+            if (lineHeight > 0)
+            {
+                imgHeight = lineHeight;
+                yOffSet = lineHeight - LineHeight;
+            }
             foreach (char c in subStr)
             {
                 imgWidth += BitmapCharDic[c].CharImage.PixelWidth;
@@ -341,7 +365,7 @@ namespace FntUtils
             {
                 WriteableBitmap img = BitmapCharDic[c].CharImage;
                 //wrTmp.Blit(new Rect(imgWidth, 0, img.PixelWidth, imgHeight), img, new Rect(0, 0, img.PixelWidth, imgHeight));
-                BitmapUtils.PasteBitmap(ref wrTmp, imgWidth, 0, img);
+                BitmapUtils.PasteBitmap(ref wrTmp, imgWidth, yOffSet, img);
                 imgWidth += img.PixelWidth;
             }
             return wrTmp;
