@@ -8,4 +8,4 @@ step 2: Load Font(should do when start app): Use static variable to storage font
 step 3: use static variable to create image from text, ex: </br>
   WriableBitmap img = Config.ExFntFont.GetImageFromText("Windows phone 8"); </br>
 
-Note: careful, if Bitmap Font not contain char in inputtext, in will be crash, i will fix this problem soon </br>
+Note: careful, if Bitmap Font not contain char in inputtext, in will be crash, I will fix this problem soon </br>
