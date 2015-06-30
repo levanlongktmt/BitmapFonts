@@ -9,3 +9,14 @@ D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\Bin\Debug\WriteableBitmapExWinPhone
 D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\obj\Debug\FntUtils.dll
 D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\obj\Debug\FntUtils.pdb
 D:\Work\WindowsPhone\BitmapFonts\BitmapFonts\obj\Debug\FntUtils.csprojResolveAssemblyReference.cache
+D:\Work\Git\BitmapFonts\BitmapFonts\Bin\Debug\FntUtils.dll
+D:\Work\Git\BitmapFonts\BitmapFonts\Bin\Debug\FntUtils.pdb
+D:\Work\Git\BitmapFonts\BitmapFonts\Bin\Debug\WriteableBitmapExWinPhone.dll
+D:\Work\Git\BitmapFonts\BitmapFonts\Bin\Debug\WriteableBitmapExWinPhoneXnaDependant.dll
+D:\Work\Git\BitmapFonts\BitmapFonts\Bin\Debug\WriteableBitmapExWinPhone.pdb
+D:\Work\Git\BitmapFonts\BitmapFonts\Bin\Debug\WriteableBitmapExWinPhone.xml
+D:\Work\Git\BitmapFonts\BitmapFonts\Bin\Debug\WriteableBitmapExWinPhoneXnaDependant.pdb
+D:\Work\Git\BitmapFonts\BitmapFonts\Bin\Debug\WriteableBitmapExWinPhoneXnaDependant.xml
+D:\Work\Git\BitmapFonts\BitmapFonts\obj\Debug\FntUtils.csprojResolveAssemblyReference.cache
+D:\Work\Git\BitmapFonts\BitmapFonts\obj\Debug\FntUtils.dll
+D:\Work\Git\BitmapFonts\BitmapFonts\obj\Debug\FntUtils.pdb

@@ -156,7 +156,7 @@ namespace FntUtils
         public void LoadFont(string fntFilePath)
         {
             string _fntPath = fntFilePath;
-            if (_fntPath.IndexOf('/') == 0) _fntPath.TrimStart('/');
+            if (_fntPath[0]== '/') _fntPath = _fntPath.TrimStart('/');
             string _imagePath = "/" + _fntPath.Substring(0, _fntPath.Length - 3) + "png";
 
             Uri fntUri = new Uri(_fntPath, UriKind.RelativeOrAbsolute);
